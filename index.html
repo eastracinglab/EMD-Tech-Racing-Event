@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamiya Mini4WD Race for a Cause - Pre-Order Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .qr-code {
+            display: none;
+            margin-top: 10px;
+        }
+        .qr-code img {
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tamiya Mini4WD Race for a Cause - Pre-Order Form</h1>
+        
+        <h2>Step 1: Choose Your Car</h2>
+        <p><strong>Car Options:</strong></p>
+        <ul>
+            <li>Sonic Saber (Super II Chassis)</li>
+            <li>Magnum Saber (Super II Chassis)</li>
+            <li>Brocken Gigant (FM-A Chassis)</li>
+            <li>Dog Racer (Super II Chassis)</li>
+            <li>Cat Racer (Super II Chassis)</li>
+            <li>Hawk Racer (Super II Chassis)</li>
+        </ul>
+        <p><strong>Price:</strong> PHP 750 per car kit</p>
+        <p><em>Includes: Mini4WD car set, 2 AA batteries, nipper, & screwdriver</em></p>
+        <p><em>Part of the proceeds will be donated.</em></p>
+
+        <h2>Step 2: Build Your Car</h2>
+        <ul>
+            <li>Orders will be delivered on the day of the fun run.</li>
+            <li>Build takes about 45 minutes. Assistance is available.</li>
+        </ul>
+
+        <h2>Step 3: Race Your Car</h2>
+        <p>Compete and enjoy!</p>
+
+        <form id="preOrderForm">
+            <h2>Pre-Order Details</h2>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="carModel">Selected Car Model:</label>
+            <select id="carModel" name="carModel" required>
+                <option value="">Select a car model</option>
+                <option value="Sonic Saber">Sonic Saber</option>
+                <option value="Magnum Saber">Magnum Saber</option>
+                <option value="Brocken Gigant">Brocken Gigant</option>
+                <option value="Dog Racer">Dog Racer</option>
+                <option value="Cat Racer">Cat Racer</option>
+                <option value="Hawk Racer">Hawk Racer</option>
+            </select>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+
+            <label>Payment Method:</label>
+            <label>
+                <input type="radio" name="paymentMethod" value="G-Cash" required> G-Cash
+            </label>
+            <label>
+                <input type="radio" name="paymentMethod" value="Bank Transfer" required> Bank Transfer
+            </label>
+
+            <div id="gCashQR" class="qr-code">
+                <p>Scan this QR code for G-Cash payment:</p>
+                <img src="path_to_gcash_qr_code.png" alt="G-Cash QR Code">
+            </div>
+
+            <div id="bankTransferQR" class="qr-code">
+                <p>Scan this QR code for Bank Transfer:</p>
+                <img src="path_to_bank_transfer_qr_code.png" alt="Bank Transfer QR Code">
+            </div>
+
+            <label for="notes">Additional Notes:</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+
+            <input type="submit" value="Submit Pre-Order">
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('preOrderForm');
+        const paymentMethods = document.getElementsByName('paymentMethod');
+        const gCashQR = document.getElementById('gCashQR');
+        const bankTransferQR = document.getElementById('bankTransferQR');
+
+        paymentMethods.forEach(method => {
+            method.addEventListener('change', function() {
+                if (this.value === 'G-Cash') {
+                    gCashQR.style.display = 'block';
+                    bankTransferQR.style.display = 'none';
+                } else if (this.value === 'Bank Transfer') {
+                    gCashQR.style.display = 'none';
+                    bankTransferQR.style.display = 'block';
+                }
+            });
+        });
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Replace this URL with your Google Apps Script Web App URL
+            fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Pre-order submitted successfully!');
+                form.reset();
+                gCashQR.style.display = 'none';
+                bankTransferQR.style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
